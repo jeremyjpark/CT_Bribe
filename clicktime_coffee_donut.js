@@ -1,37 +1,36 @@
 $(document).ready(function() {
-  var map;
-  var initialLocation;
-  var browserSupportFlag = new Boolean();
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: -34.397, lng: 150.644},
+    zoom: 6
+  });
+  var infoWindow = new google.maps.InfoWindow({map: map});
 
-  function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: initialLocation.lat(), lng: initialLocation.lng()},
-      zoom: 8
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      alert(pos);
+      infoWindow.setPosition(pos);
+      infoWindow.setContent('Location found.');
+      map.setCenter("hi");
+    }, function() {
+      handleLocationError(true, infoWindow, map.getCenter());
     });
-
-    if(navigator.geolocation) {
-      browserSupportFlag = true;
-      navigator.geolocation.getCurrentPosition(function(position) {
-        initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-        map.setCenter(initialLocation);
-      }, function() {
-        handleNoGeolocation(browserSupportFlag);
-      });
-    }
-    else {
-      browserSupportFlag = false;
-      handleNoGeolocation(browserSupportFlag);
-    }
-
-    function handleNoGeolocation(errorFlag) {
-      if (errorFlag == true) {
-        alert("Geolocation service failed.");
-      } else {
-        alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
-      }
-      map.setCenter(initialLocation);
-    }
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
   }
+}
 
-  initMap();
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+}
+initMap();
 });
