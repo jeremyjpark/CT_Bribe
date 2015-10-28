@@ -26,7 +26,7 @@ function initMap() {
     geocoder.geocode({'address': clicktime_address}, function(results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
         destination = results[0].geometry.location;
-        break
+        console.log(destination)
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
