@@ -14,9 +14,6 @@ function initMap() {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
-      alert(pos.lat);
-      infoWindow.setPosition(pos);
-      infoWindow.setContent('Location found.');
       map.setCenter("hi");
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
