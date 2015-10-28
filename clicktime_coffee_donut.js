@@ -20,6 +20,7 @@ $(document).ready(function() {
     var directionsDisplay = new google.maps.DirectionsRenderer;
     var directionsService = new google.maps.DirectionsService;
     directionsDisplay.setPanel(document.getElementById('directions'));
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
   }
 
   function geocodeAddress(geocoder) {
