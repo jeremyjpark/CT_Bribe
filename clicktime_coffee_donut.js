@@ -1,34 +1,29 @@
 $(document).ready(function() {
-var pos;
+var origin;
+var destination 
 function initMap() {
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -34.397, lng: 150.644},
-    zoom: 6
-  });
-  var infoWindow = new google.maps.InfoWindow({map: map});
-
-  // Try HTML5 geolocation.
+  // Geocode the destination
+  var geocoder = new google.maps.Geocoder();
+  geocodeAddress(geocoder);
+  // Find the Current Location w/ html5 geolocation
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
-      pos = {
+      origin = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
-      map.setCenter("hi");
     }, function() {
-      handleLocationError(true, infoWindow, map.getCenter());
+      ;
     });
-  } else {
-    // Browser doesn't support Geolocation
-    handleLocationError(false, infoWindow, map.getCenter());
   }
-}
+  // Find places near Clicktime
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(browserHasGeolocation ?
-                        'Error: The Geolocation service failed.' :
-                        'Error: Your browser doesn\'t support geolocation.');
-}
-initMap();
+  // Calculate route w/ waypoints and options
+  }
+
+  function geocodeAddress(geocoder) {
+
+  }
+
+  initMap();
 });
