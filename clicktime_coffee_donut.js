@@ -9,7 +9,10 @@ $(document).ready(function() {
     // Find the Current Location w/ html5 geolocation
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        origin = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        origin = new google.maps.LatLng({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        });
       }, function() {
         ;
       });
@@ -20,14 +23,16 @@ $(document).ready(function() {
     var directionsDisplay = new google.maps.DirectionsRenderer;
     var directionsService = new google.maps.DirectionsService;
     directionsDisplay.setPanel(document.getElementById('directions'));
-    calculateAndDisplayRoute(directionsService, directionsDisplay);
   }
 
   function geocodeAddress(geocoder) {
     var clicktime_address = "282 2nd Street 4th floor, San Francisco, CA 94105";
     geocoder.geocode({'address': clicktime_address}, function(results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
-        destination = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+        destination = new google.maps.LatLng({
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        });
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
@@ -35,9 +40,11 @@ $(document).ready(function() {
   }
 
   function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+    var start = origin;
+    var end = destination;
     directionsService.route({
-      origin: origin,
-      destination: destination,
+      origin: start,
+      destination: end,
       travelMode: google.maps.TravelMode.DRIVING
     }, function(response, status) {
       if (status === google.maps.DirectionsStatus.OK) {
