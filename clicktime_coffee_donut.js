@@ -6,4 +6,5 @@ $(document).ready(function() {
       zoom: 8
     });
   }
+  initMap();
 });
