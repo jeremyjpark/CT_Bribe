@@ -25,8 +25,10 @@ function initMap() {
     var clicktime_address = "282 2nd Street 4th floor, San Francisco, CA 94105";
     geocoder.geocode({'address': clicktime_address}, function(results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
-        destination = results[0].geometry.location;
-        console.log(destination.lat())
+        destination = {
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        };
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
@@ -34,4 +36,6 @@ function initMap() {
   }
 
   initMap();
+  console.log(origin)
+  console.log(destination)
 });
